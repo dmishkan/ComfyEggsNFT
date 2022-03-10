@@ -2,19 +2,11 @@ import React, { Component } from 'react';
 import Web3 from 'web3'
 import './App.css';
 import ComfyEggs from '../abis/ComfyEggs.json';
+import Whitelist from '../abis/Whitelist.json';
 const {MerkleTree} = require('merkletreejs');
 const keccak256 = require('keccak256');
 
-//place merkle root in state 
-
 class App extends Component {
-
-  // async componentWillMount() {
-  //   await this.loadWeb3()
-  //   await this.changeNetworkEthMainnet()
-  //   await this.loadBlockchainData()
-  // }
- 
 
   connectToWeb3 = async () => {
     await this.loadWeb3()
@@ -22,7 +14,6 @@ class App extends Component {
     await this.loadBlockchainData()
     this.loadMerkle();
   }
-
 
   async loadWeb3() {
     if (window.ethereum) {
@@ -52,8 +43,7 @@ class App extends Component {
   async loadBlockchainData() {
     
     const web3 = window.web3
-    
-    //window.ethereum.on("chainChanged", () => window.location.reload());
+
     window.ethereum.on("accountsChanged", () => window.location.reload());
     
     //Load account
@@ -62,7 +52,7 @@ class App extends Component {
 
     //Load contract
     const abi = ComfyEggs.abi; //replace abi file with mainnet abi
-    const contract_adress = '0xCC40cb50fB54dDe2BC74dD0fB51C95a8DaF85898'; //replace with mainnet contract
+    const contract_adress = '0xbF1Ba4F04BC95C1D7bD5e8a934ea545EC54CC7A3'; //replace with mainnet contract address
     const contract = new web3.eth.Contract(abi, contract_adress)
     this.setState({ contract })
     this.setState({contract_adress})
@@ -86,12 +76,22 @@ class App extends Component {
     //Load maxComfyEggsPerPurchase
     const maxComfyEggsPerPurchase = await contract.methods.MAX_COMFY_EGGS_PER_PURCHASE().call()
     this.setState({ maxComfyEggsPerPurchase })
+
+    //Load maxComfyEggsWhitelistCap
+    const maxComfyEggsWhitelistCap = await contract.methods.MAX_COMFY_EGGS_WHITELIST_CAP().call()
+    this.setState({maxComfyEggsWhitelistCap})
   }
 
   connect = async () => {
+    document.getElementById("connect").disabled = true;
+    document.getElementById("connect").style.cursor = "auto";
+    document.getElementById("connect2").disabled = true;
+    document.getElementById("connect2").style.cursor = "auto";
     await this.connectToWeb3();
-    this.revealMintOrNot();
+    this.revealMintHTMLOrNot();
   }
+
+
 
   toggleMenu = () => {
     if(!this.state.menuOpen) 
@@ -110,36 +110,22 @@ class App extends Component {
   }
 
   loadMerkle = () => {
-    //have whitelist addresses ready
-    let whitelist = 
-    [
-        "0x276e6AE9e171C5db63709Cc6Cc15dD78745D709f", 
-        "0x603e91B7Cf098bE76EfF45542Fe046e33C797F3d"
-    ];
 
-    //merkleTree and rootHash need to be uploaded/updated to contract once you have all whitelist addresses ready
+    const whitelist = Whitelist.whitelist;
     const leafNodes = whitelist.map(addy => keccak256(addy));
     const merkleTree = new MerkleTree(leafNodes, keccak256, {sortPairs: true});
     const rootHash = merkleTree.getRoot();
 
-    //NEED TO CREATE BOTTOM 2 IN APP.JS TO SEND TO CONTRACT
-    const claimingAddress = keccak256(this.state.account); //CHANGE ADDRESS IN HERE TO WHICHEVER CURRENT WHITELISTER IS TRYING TO MINT
+    const claimingAddress = keccak256(this.state.account);
     const hexProof = merkleTree.getHexProof(claimingAddress);
     this.setState({ hexProof })
 
-    //INFO HERE TO UPLOAD/UPDATE TO SMART CONTRACT
-    // console.log('Whitelist Merkle Tree\n', merkleTree.toString('hex'));
-    // console.log('MERKLE ROOT (COPY THIS TO UPLOAD TO BLOCKCHAIN)\n', "0x" + rootHash.toString('hex'));
-    // console.log('HEX PROOF\n', hexProof);
-
-    //PROVES THAT claimingAddress IS VERIFIED/UNVERIFIED HERE, BUT SAME ANSWER HERE SHOULD ALSO BE ON THE BLOCKCHAIN/SMARTCONTRACT VERIFY FUNCTION
     const addressWhitelisted = merkleTree.verify(hexProof, claimingAddress, rootHash);
     this.setState({ addressWhitelisted })
 
-    // console.log(addressWhitelisted) 
   }
 
-  revealMintOrNot = () => {
+  revealMintHTMLOrNot = () => {
     if (this.state.mintActive)
     {
       document.getElementById('mint').style.display = "block";
@@ -166,11 +152,20 @@ class App extends Component {
 
   incrementCount = () => {
 
-    if (this.state.count+1 <= this.state.maxComfyEggsPerPurchase)
+    if (this.state.mintActive) 
     {
-      this.setState({count: this.state.count+1});
+      if (this.state.count+1 <= this.state.maxComfyEggsPerPurchase)
+      {
+        this.setState({count: this.state.count+1});
+      }
     }
-  
+    else if (this.state.presaleActive)
+    {
+      if (this.state.count+1 <= this.state.maxComfyEggsWhitelistCap)
+      {
+        this.setState({count: this.state.count+1});
+      }
+    }
   }
 
   decrementCount = () => {
@@ -191,6 +186,7 @@ class App extends Component {
       price: 0,
       mintActive: '',
       maxComfyEggsPerPurchase: 0,
+      maxComfyEggsWhitelistCap: 0,
       count: 1,
       menuOpen: false,
       hexProof: [],
@@ -209,7 +205,7 @@ class App extends Component {
             </div>
             
             <div id="second" class="items">
-              <button class="buttontheme" style={{outline: 'none'}} onClick={this.connect}>{this.state.account}</button>
+              <button id="connect" class="buttontheme" style={{outline: 'none'}} onClick={this.connect}>{this.state.account}</button>
             </div>
             
             <div id="third" class="items">
@@ -221,7 +217,7 @@ class App extends Component {
 
         <div id="overlay">
           <div class="overlay-content">
-            <a><button class="buttontheme" style={{outline: 'none'}} onClick={this.connect}>{this.state.account}</button></a>
+            <a><button id="connect2" class="buttontheme" style={{outline: 'none'}} onClick={this.connect}>{this.state.account}</button></a>
             <a target="._blank" href="https://www.discord.com/"><img class="socials" alt="" src={require('../images/discord.png')}/></a>
             <a target="._blank" href="https://www.twitter.com/"><img class="socials" alt="" src={require('../images/twitter.png')}/></a>
             <a target="._blank" href="https://www.opensea.io/"><img class="socials" alt="" src={require('../images/opensea.png')}/></a>

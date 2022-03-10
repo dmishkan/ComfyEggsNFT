@@ -1,20 +1,18 @@
 // // SPDX-License-Identifier: MIT
-// pragma solidity >=0.4.22 <0.9.0;
+// pragma solidity >= 0.4.22 < 0.9.0;
 
 // import "@openzeppelin/contracts/access/Ownable.sol";
 // import "@openzeppelin/contracts/utils/math/SafeMath.sol";
-// import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 // import "@openzeppelin/contracts/utils/cryptography/MerkleProof.sol";
 // import "./ERC721A.sol";
 
-// contract ComfyEggs is ERC721A, Ownable,ReentrancyGuard {
+// contract ComfyEggs is ERC721A, Ownable {
 //     using SafeMath for uint256;
 //     using Strings for uint256;
 
 //     uint256 public MAX_COMFY_EGGS = 20;
-//     uint256 public RESERVED_COMFY_EGGS = 10;
 //     uint256 public MAX_COMFY_EGGS_PER_PURCHASE = 20;
-//     uint256 public MAX_COMFY_EGGS_WHITELIST_CAP = 2;
+//     uint256 public MAX_COMFY_EGGS_WHITELIST_CAP = 5;
 //     uint256 public COMFY_EGG_PRICE = 0.01 ether;
     
 //     string private tokenBaseURI;
@@ -22,11 +20,9 @@
 //     bool public revealed = false;
 //     bool public presaleActive = false;
 //     bool public mintActive = false;
-//     bool public reservesMinted = false;
 
 //     bytes32 public merkleRoot;
 //     mapping(address => uint256) private whitelistAddressMintCount;
-//     mapping(address => bool) private whitelistClaimed;
 
 //     constructor(string memory _initBaseURI, string memory _initUnrevealedURI, bytes32 _allowlistMerkleRoot) ERC721A("Comfy Eggs", "CE") 
 //     {
@@ -35,7 +31,7 @@
 //         merkleRoot = _allowlistMerkleRoot;
 //     }
 
-//     // OWNER FUNCTIONS
+//     //OWNER FUNCTIONS
 
 //     function setTokenBaseURI(string memory _baseURI) external onlyOwner 
 //     {
@@ -52,12 +48,6 @@
 //         revealed = true;
 //     }
 
-//     function setWhitelistCap(uint256 _whitelist_cap) external onlyOwner 
-//     {
-//         require(_whitelist_cap > RESERVED_COMFY_EGGS, "New reserved count must be higher than old");
-//         RESERVED_COMFY_EGGS = _whitelist_cap;
-//     }
-
 //     function setPresaleActive(bool _active) external onlyOwner 
 //     {
 //         presaleActive = _active;
@@ -66,6 +56,11 @@
 //     function setMintActive(bool _active) external onlyOwner 
 //     {
 //         mintActive = _active;
+//     }
+
+//     function setPrice(uint256 _newPrice) external onlyOwner 
+//     {
+//         COMFY_EGG_PRICE = _newPrice;
 //     }
 
 //     function getBalance() public view onlyOwner returns (uint256) 
@@ -78,30 +73,36 @@
 //         payable(msg.sender).transfer(address(this).balance);
 //     }
 
-//     function mintReservedEggs() external onlyOwner 
-//     {
-//         require(!reservesMinted, "Reserves have already been minted");
-//         require(totalSupply().add(RESERVED_COMFY_EGGS) <= MAX_COMFY_EGGS, "This mint would exceed max supply of Comfy Eggs");
-//         _safeMint(msg.sender, RESERVED_COMFY_EGGS);    
-//         reservesMinted = true;
-//     }
-
 //     function setAllowlistMerkleRoot(bytes32 _allowlistMerkleRoot) external onlyOwner
 //     {
 //         merkleRoot = _allowlistMerkleRoot;
 //     }
 
 
-//     // MINT FUNCTIONS
+//     function gift(uint256[] calldata quantity, address[] calldata recipient) external onlyOwner
+//     {
+//         require(quantity.length == recipient.length, "Provide a quantity for each recipent");
+//         uint256 totalQuantity = 0;
+//         for (uint256 i = 0; i < quantity.length; ++i) 
+//         {
+//             totalQuantity += quantity[i];
+//         }
+//         require(totalSupply().add(totalQuantity) <= MAX_COMFY_EGGS, "Trying to mint goes over Max Egg Supply");
+//         for (uint256 i = 0; i < recipient.length; ++i) 
+//         {
+//             _safeMint(recipient[i], quantity[i]);
+//         }
+//     }
+
+
+//     //USER MINT FUNCTIONS
 
 //     function presaleMint(uint256 _quantity, bytes32[] calldata _merkleProof) external payable
 //     {
 //         require(presaleActive, "Presale is inactive");
-//         require(!whitelistClaimed[msg.sender], "Whitelist already claimed.");
 //         require(MerkleProof.verify(_merkleProof, merkleRoot, keccak256(abi.encodePacked(msg.sender))), "Invalid Merkle Proof");
-//         require(_quantity <= MAX_COMFY_EGGS_WHITELIST_CAP, "You can only mint a maximum of 2 for presale");
+//         require(_quantity <= MAX_COMFY_EGGS_WHITELIST_CAP, "This would exceed maximum quantity presale allowance");
 //         require(whitelistAddressMintCount[msg.sender].add(_quantity) <= MAX_COMFY_EGGS_WHITELIST_CAP, "This purchase would exceed the maximum Comfy Eggs you are allowed to mint in the presale");
-//         whitelistClaimed[msg.sender] = true;
 //         whitelistAddressMintCount[msg.sender] += _quantity;
 //         _safeMintEggs(_quantity);
 //     }
@@ -120,7 +121,6 @@
 //         require(msg.value >= COMFY_EGG_PRICE.mul(_quantity), "The ether value sent is not correct");
 //         _safeMint(msg.sender, _quantity);    
 //     }
-
 
 
 //     //EVERYTHING ELSE
