@@ -1,27 +1,23 @@
 /*mobile-first design*/
 
 html {
-  font-size: 16px;
-}
-
-body {
-  background-color: white;
+  font-size: 22px;
 }
 
 .buttontheme {
-  background: #FF4742;
-  border: 1px solid #FF4742;
+  background: #eee4ca;
+  border: 1px solid white;
   border-radius: 6px;
   box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
   box-sizing: border-box;
-  color: rgb(52, 58, 64);
+  color: #c2ad6d;
   cursor: pointer;
   font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 800;
   line-height: 16px;
-  min-height: 40px;
-  min-width: 40px;
+  min-height: 50px;
+  min-width: 50px;
   padding: 12px 14px;
   text-align: center;
   text-rendering: geometricprecision;
@@ -37,7 +33,7 @@ body {
 .buttontheme:active {
   background-color: initial;
   background-position: 0 0;
-  color: #FF4742;
+  color: white;
 }
 
 .buttontheme:active {
@@ -48,7 +44,16 @@ body {
   width: 99vw;
   height: 100vh;
   justify-content: center;
-  background: black;
+  background: #c2ad6d;
+  /* background: #d5c08a */
+}
+
+nav {
+  background: #c2ad6d;
+  position: fixed;
+  width: 100vw;
+  height: 10vh;
+  z-index: 10;
 }
 
 #banner {
@@ -63,21 +68,17 @@ body {
 
 h1 {
   color: white;
+  text-shadow: 2px 2px black;
   letter-spacing: 5px;
   animation: fadeIn 1s;
 }
 
 h2 {
   color: white;
+  text-shadow: 2px 2px black;
 }
 
-nav {
-  background: rgb(37, 37, 37);
-  position: fixed;
-  width: 100vw;
-  height: 10vh;
-  z-index: 1;
-}
+
 
 .items {
   display: flex;
@@ -173,13 +174,14 @@ nav {
 }
 
 #mintbutton {
-  width: 300px;
+  width: 400px;
 }
 
 #count {
   color: white;
-  min-height: 40px;
-  min-width: 40px;
+  -webkit-text-stroke: 1px white;
+  min-height: 50px;
+  min-width: 50px;
   border: solid white 1px;
   border-radius: 6px;
   display:flex;
@@ -194,11 +196,13 @@ nav {
 }
 
 .socials {
-  filter: brightness(0%) drop-shadow(0 0 0.75rem rgb(255, 71, 66));
-  width: 65px;
-  height: 65px;
+  filter: drop-shadow(0 0 0.25rem black);
+  width: 75px;
+  height: 75px;
   padding: 10px;
-  margin: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+
 }
 
 .socials:hover {

@@ -129,12 +129,12 @@ class App extends Component {
     if (this.state.mintActive)
     {
       document.getElementById('mint').style.display = "block";
-      document.getElementById('banner').style.animation = "fadeIn 1s";      
+      document.getElementById('banner').style.animation = "fadeIn 1s";    
     }
     else if (this.state.presaleActive && this.state.addressWhitelisted) {
       document.getElementById('title').innerHTML = "COMFY EGGS WHITELIST";
       document.getElementById('mint').style.display = "block";
-      document.getElementById('banner').style.animation = "fadeIn 1s"; 
+      document.getElementById('banner').style.animation = "fadeIn 1s";
     }
   }
 
@@ -198,6 +198,8 @@ class App extends Component {
     return (
       <body>
           
+
+          
           <nav>
             <div class="menu-btn" onClick={this.toggleMenu}><div class="menu-btn__burger"></div></div>
             <div id="first" class="items">
@@ -209,8 +211,8 @@ class App extends Component {
             </div>
             
             <div id="third" class="items">
-              <a target="._blank" href="https://www.discord.com/"><img class="socials" alt="" src={require('../images/discord.png')}/></a>
-              <a target="._blank" href="https://www.twitter.com/"><img class="socials" alt="" src={require('../images/twitter.png')}/></a>
+              <a target="._blank" href="https://discord.gg/DUj9CA7GXR"><img class="socials" alt="" src={require('../images/discord.png')}/></a>
+              <a target="._blank" href="https://twitter.com/ComfyEggsNFT"><img class="socials" alt="" src={require('../images/twitter.png')}/></a>
               <a target="._blank" href="https://www.opensea.io/"><img class="socials" alt="" src={require('../images/opensea.png')}/></a>
             </div>
           </nav>
@@ -218,11 +220,13 @@ class App extends Component {
         <div id="overlay">
           <div class="overlay-content">
             <a><button id="connect2" class="buttontheme" style={{outline: 'none'}} onClick={this.connect}>{this.state.account}</button></a>
-            <a target="._blank" href="https://www.discord.com/"><img class="socials" alt="" src={require('../images/discord.png')}/></a>
-            <a target="._blank" href="https://www.twitter.com/"><img class="socials" alt="" src={require('../images/twitter.png')}/></a>
+            <a target="._blank" href="https://discord.gg/DUj9CA7GXR"><img class="socials" alt="" src={require('../images/discord.png')}/></a>
+            <a target="._blank" href="https://twitter.com/ComfyEggsNFT"><img class="socials" alt="" src={require('../images/twitter.png')}/></a>
             <a target="._blank" href="https://www.opensea.io/"><img class="socials" alt="" src={require('../images/opensea.png')}/></a>
           </div>
         </div>
+
+        
 
         <div id="banner">
           <h1 id="title">COMFY EGGS</h1>
@@ -243,6 +247,22 @@ class App extends Component {
         <p>TEXT</p>
         <p>TEXT</p>
         <p>TEXT</p>
+        <section>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </section>
+
+        <div class="stars"></div>
+        <div class="twinkling"></div>
+        <div class="cloud"></div>
 
         
        

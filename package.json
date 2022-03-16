@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "An Ethereum Marketplace",
   "author": "gregory@dappuniversity.com",
+  "homepage": "http://comfyeggs.com/",
   "dependencies": {
     "@openzeppelin/contracts": "^4.5.0",
     "babel-polyfill": "6.26.0",
