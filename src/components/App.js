@@ -196,14 +196,11 @@ class App extends Component {
 
   render() {
     return (
-      <body>
-          
-
-          
+      <body>  
           <nav>
             <div class="menu-btn" onClick={this.toggleMenu}><div class="menu-btn__burger"></div></div>
             <div id="first" class="items">
-              <h2>COMFY EGGS</h2>
+              <a href="./"><img id="home" alt="" src={require('../images/icon.png')}/></a>
             </div>
             
             <div id="second" class="items">
@@ -225,9 +222,6 @@ class App extends Component {
             <a target="._blank" href="https://www.opensea.io/"><img class="socials" alt="" src={require('../images/opensea.png')}/></a>
           </div>
         </div>
-
-        
-
         <div id="banner">
           <h1 id="title">COMFY EGGS</h1>
           <div id="mint">
@@ -243,29 +237,21 @@ class App extends Component {
               }}>MINT</button>
           </div>
         </div>
-        <p>TEXT</p>
-        <p>TEXT</p>
-        <p>TEXT</p>
-        <p>TEXT</p>
-        <section>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-        </section>
-
-        <div class="stars"></div>
-        <div class="twinkling"></div>
-        <div class="cloud"></div>
-
-        
-       
+        <p id="terms">Terms and Conditions</p>
+        <p id="terms_paragraph">
+        You Own Your NFT: By connecting your Ethereum wallet and minting a NFT with our smart contract, you gain full and complete ownership of your NFT.
+        Limitations of Liability for Gas, Failed Transactions, and other Bugs. We have worked very hard to make sure that there are no bugs in our smart
+        contract and that our initial NFT launch is smooth as possible. As we have seen in many previous projects, however, sometimes things break. 
+        You agree to not hold NFTs accountable for any losses you may incur as a consequence of minting your NFT. These potential losses include any gas
+        fees for failed transactions, and any excessive gas fees during the minting process. NFTs Are Not Intended as Investments: NFTs serve exclusively
+        as Non-Fungible Tokens for you to collect. They are not intended for any investment purposes. We make absolutely no promise or guarantee that 
+        these NFTs will hold any particular value once minted on our website. You are responsible for any tax liability which may arise from minting or 
+        reselling your NFT(s). Class Action Waiver: You agree to waive any class action status, and any legal dispute around the NFTs project. Children: 
+        You agree that you are over the age of 18, or the legal age within your jurisdiction. Arbitration: In the event that a legal dispute arises from 
+        anything related to the NFTs project, you agree to bring the case to binding arbitration according to appropriate Federal guidelines. 
+        Jurisdiction and Choice of Law: You agree that for purposes of any legal dispute, you will be subject to the jurisdiction of the United States 
+        and that any legal proceeding will be brought in the United States.
+        </p>
       </body>
     );
   }
