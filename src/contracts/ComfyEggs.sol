@@ -13,7 +13,7 @@
 //     uint256 public MAX_COMFY_EGGS = 20;
 //     uint256 public MAX_COMFY_EGGS_PER_PURCHASE = 20;
 //     uint256 public MAX_COMFY_EGGS_WHITELIST_CAP = 5;
-//     uint256 public COMFY_EGG_PRICE = 0.01 ether;
+//     uint256 public COMFY_EGG_PRICE = 0.02 ether;
     
 //     string private tokenBaseURI;
 //     string private unrevealedURI;
