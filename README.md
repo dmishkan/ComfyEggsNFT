@@ -33,4 +33,6 @@ Official ComfyEggs verified Solidity code on the Blockchain (Testnet) can be fou
 
 https://rinkeby.etherscan.io/address/0x0e9d72a3ab0f33ace9a3ae6bb4068fb0c9d9adcc#code
 
-Updated Code (for optimization and readability reasons) are found in this repository.
+Updated Solidity code (for optimization and readability reasons) are found in this repository (src -> contracts -> ComfyEggs.sol).
+
+Smart Contract was uploaded to the Blockchain through remix.ethereum.org
