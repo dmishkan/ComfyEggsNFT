@@ -9,7 +9,7 @@ Once smart contract is live, go to comfyeggs.com.
 ![normal_site2](https://user-images.githubusercontent.com/39421814/176080575-d37e3e34-dd97-4d8c-a6ca-429e9d0050d2.png)
 
 
-## Minting access
+## Minting Access
 Connect your MetaMask hotwallet by clicking CONNECT.
 If whitelist minting is live and you are on the whitelist (ERC20/hot wallet address added to whitelist achieved by completing tasks on our Discord), you will be able to mint early (as per contract owner's release) up to 5 Comfy Egg NFTs. Addresses are whitelist-verified through MerkleTree application. 
 ![whitelist](https://user-images.githubusercontent.com/39421814/176081116-a6206583-fecb-43a3-9bf8-7360b181afa6.png)
